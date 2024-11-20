@@ -1,17 +1,7 @@
-﻿using Patagames.Pdf.Enums;
-using Patagames.Pdf.Net;
+﻿using PdfViewer.Core.PDFViewer;
 
-using PdfViewer.Core.PDFViewer;
-
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
 namespace PdfViewer.Core
@@ -49,20 +39,17 @@ namespace PdfViewer.Core
             string? path = e.NewValue.ToString();
             if (viewer != null && path != null)
             {
-                ObservableCollection<PageItemData> itemSource = new ObservableCollection<PageItemData>();
+                ObservableCollection<PageItemData> itemSource = [];
 
-                using var doc = PdfDocument.Load(path); // C# Read PDF Document
-                foreach (var page in doc.Pages)
+                // 使用 PdfiumViewer 渲染 PDF
+                using PdfiumViewer.PdfDocument pdfDocument = PdfiumViewer.PdfDocument.Load(path);
+                for (int i = 0; i < pdfDocument.PageCount; i++)
                 {
-                    int width = (int)(page.Width / 72.0 * 96);
-                    int height = (int)(page.Height / 72.0 * 96);
-                    using var bitmap = new PdfBitmap(width, height, true);
-                    bitmap.FillRect(0, 0, width, height, Patagames.Pdf.FS_COLOR.White);
-                    page.Render(bitmap, 0, 0, width, height, PageRotate.Normal, RenderFlags.FPDF_LCD_TEXT);
-
-                    System.Drawing.Image image = bitmap.GetImage();
-                    var imageSource = BitmapSourceHelper.ConvertImageToBitmapSource(image);
-                    itemSource.Add(new PageItemData(imageSource));
+                    // 渲染单页为 Bitmap
+                    using var bitmap = pdfDocument.Render(i, 300, 300, true);
+                    var bitmapSource = BitmapSourceHelper.ConvertImageToBitmapSource(bitmap);
+                    PageItemData pageItem = new(bitmapSource);
+                    itemSource.Add(pageItem);
                 }
 
                 viewer.ItemsSource = itemSource;
