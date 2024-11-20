@@ -6,12 +6,10 @@
 Add this xml namespace line to your app.xaml:  
 ```csahrp 
   xmlns:viewer="clr-namespace:PdfViewer.Core;assembly=PdfViewer.Core"
-
 ```
 then Add the control declaration code:  
 ```csahrp 
   <core:PdfViewer FileSource="{Binding PdfPath}" ItemWidth="80" ItemHeight="80" SelectedIndex="0"/>
-
 ```
 
 ## Sample
