@@ -1,4 +1,4 @@
-# An easy to use pdf viewer libriray for .net applications.
+# An easy to use pdf viewer libriray for WPF applications.
 
 
 
