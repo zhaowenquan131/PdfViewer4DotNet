@@ -9,7 +9,7 @@ Add this xml namespace line to your app.xaml:  
 ```
 then Add the control declaration code:  
 ```csahrp 
-  <core:PdfViewer FileSource="{Binding PdfPath}" ItemWidth="80" ItemHeight="80" SelectedIndex="0"/>
+  <viewer:PdfViewer FileSource="{Binding PdfPath}" ItemWidth="80" ItemHeight="80" SelectedIndex="0"/>
 ```
 
 ## Sample
