@@ -9,11 +9,16 @@ namespace PdfViewer.Core.PDFViewer
 {
     internal class PageItemData
     {
-        public BitmapSource PageSource { get; set; }
-
-        public PageItemData(BitmapSource pageSource)
+        public PageItemData(BitmapSource pageSource, BitmapSource pageItemSource)
         {
             PageSource = pageSource;
+            PageItemSource = pageItemSource;
         }
+
+        public BitmapSource PageSource { get; set; }
+
+        public BitmapSource PageItemSource { get; set; }
+
+
     }
 }

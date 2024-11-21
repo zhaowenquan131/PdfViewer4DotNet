@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewer="clr-namespace:PdfViewer.Core"
+                    xmlns:converter="clr-namespace:PdfViewer.Core.Converters"
                     >
 
     <!-- CustomItemsControl 样式 -->
@@ -18,12 +19,13 @@
                             </Grid.ColumnDefinitions>
                             <ScrollViewer>
                                 <ItemsPresenter />
-                                
                             </ScrollViewer>
-                            <Image Grid.Column="1" Width="auto" Height="auto" Source="{Binding SelectedItem.PageSource, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <Image Grid.Column="1" Width="auto" Height="auto" 
+                                   Source="{Binding SelectedItem.PageSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Stretch="{Binding PageStretch, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Grid>
                     </Border>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -33,9 +35,12 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <viewer:PdfPageItem 
+                            BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected, Converter={converter:IsSelectedToBrushConverter}}" 
+                            BorderThickness="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected, Converter={converter:IsSelectedToThicknessConverter}}"
                             Width="{Binding RelativeSource={RelativeSource AncestorType=viewer:PdfViewer}, Path=ItemWidth}"
                             Height="{Binding RelativeSource={RelativeSource AncestorType=viewer:PdfViewer}, Path=ItemHeight}"
-                            PageItemSource="{Binding PageSource}"/>
+                            ImageStretch="{Binding RelativeSource={RelativeSource AncestorType=viewer:PdfViewer}, Path=ItemStretch}"
+                            PageItemSource="{Binding PageItemSource}" />
                     </StackPanel>
                 </DataTemplate>
             </Setter.Value>
@@ -48,6 +53,8 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
+
+        
     </Style>
 
 </ResourceDictionary>

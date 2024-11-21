@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="{Binding PdfPath}" Height="450" Width="800">
     <Grid>
-        <core:PdfViewer FileSource="{Binding PdfPath}" ItemWidth="80" ItemHeight="80" SelectedIndex="0"/>
+        <core:PdfViewer FileSource="{Binding PdfPath}" ItemStretch="Fill" PageStretch="Uniform"  ItemWidth="80" ItemHeight="80" SelectedIndex="0"/>
     </Grid>
 </Window>

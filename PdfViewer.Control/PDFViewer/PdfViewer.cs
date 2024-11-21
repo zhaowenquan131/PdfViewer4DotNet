@@ -2,11 +2,13 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace PdfViewer.Core
 {
-    public class PdfViewer : Selector
+    public class PdfViewer : ListBox
     {
 
         static PdfViewer()
@@ -30,6 +32,55 @@ namespace PdfViewer.Core
         public static readonly DependencyProperty FileSourceProperty =
             DependencyProperty.Register("FileSource", typeof(string), typeof(PdfViewer), new PropertyMetadata(null, OnFileSourceChanged));
 
+
+
+        public int PageWidth
+        {
+            get { return (int)GetValue(PageWidthProperty); }
+            set { SetValue(PageWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PageWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PageWidthProperty =
+            DependencyProperty.Register("PageWidth", typeof(int), typeof(PdfViewer), new PropertyMetadata(2100));
+
+
+
+        public int PageHeight
+        {
+            get { return (int)GetValue(PageHeightProperty); }
+            set { SetValue(PageHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PageHeight.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PageHeightProperty =
+            DependencyProperty.Register("PageHeight", typeof(int), typeof(PdfViewer), new PropertyMetadata(2970));
+
+
+        public Stretch ItemStretch
+        {
+            get { return (Stretch)GetValue(ItemStretchProperty); }
+            set { SetValue(ItemStretchProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemStretchProperty =
+            DependencyProperty.Register("ItemStretch", typeof(Stretch), typeof(PdfViewer), new PropertyMetadata(Stretch.None));
+
+
+
+        public Stretch PageStretch
+        {
+            get { return (Stretch)GetValue(PageStretchProperty); }
+            set { SetValue(PageStretchProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PageStretch.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PageStretchProperty =
+            DependencyProperty.Register("PageStretch", typeof(Stretch), typeof(PdfViewer), new PropertyMetadata(Stretch.None));
+
+
+
         private static void OnFileSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             /// <summary>
@@ -46,9 +97,11 @@ namespace PdfViewer.Core
                 for (int i = 0; i < pdfDocument.PageCount; i++)
                 {
                     // 渲染单页为 Bitmap
-                    using var bitmap = pdfDocument.Render(i, 300, 300, true);
-                    var bitmapSource = BitmapSourceHelper.ConvertImageToBitmapSource(bitmap);
-                    PageItemData pageItem = new(bitmapSource);
+                    using var bitmapItem = pdfDocument.Render(i, 300, 300, true);
+                    var pageItemSource = BitmapSourceHelper.ConvertImageToBitmapSource(bitmapItem);
+                    using var bitmapPage = pdfDocument.Render(i, viewer.PageWidth, viewer.PageHeight, 100, 100, true);
+                    var pageSource = BitmapSourceHelper.ConvertImageToBitmapSource(bitmapPage);
+                    PageItemData pageItem = new(pageSource, pageItemSource);
                     itemSource.Add(pageItem);
                 }
 

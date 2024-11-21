@@ -20,7 +20,7 @@ namespace PDFViewerDemo
         public MainWindow()
         {
             InitializeComponent();
-            PdfPath = @"C:\Users\wenqu\Documents\WeChat Files\wxid_7bdy2yts3x0j21\FileStorage\File\2024-11\Final-ONCD-Technical-Report.pdf";
+            PdfPath = @"D:\work\PDFsharp\assets\archives\grammar-by-example\GBE\ReferencePDFs\GDI 1.40\Paragraph-Footnotes.pdf";
             DataContext = this;
         }
     }

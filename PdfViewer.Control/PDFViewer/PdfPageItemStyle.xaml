@@ -10,7 +10,8 @@
                     <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="{TemplateBinding PageItemSource}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                        <Image Source="{TemplateBinding PageItemSource}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                               Stretch="{TemplateBinding ImageStretch}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

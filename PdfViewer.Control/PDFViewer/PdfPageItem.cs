@@ -33,5 +33,18 @@ namespace PdfViewer.Core
             DependencyProperty.Register("PageItemSource", typeof(ImageSource), typeof(PdfPageItem), new PropertyMetadata(null));
 
 
+
+        public Stretch ImageStretch
+        {
+            get { return (Stretch)GetValue(ImageStretchProperty); }
+            set { SetValue(ImageStretchProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ImageStretch.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ImageStretchProperty =
+            DependencyProperty.Register("ImageStretch", typeof(Stretch), typeof(PdfPageItem), new PropertyMetadata(Stretch.None));
+
+
+
     }
 }
